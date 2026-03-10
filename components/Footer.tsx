@@ -11,18 +11,11 @@ const footerLinks = {
     { name: "About Us", href: "/about" },
     { name: "Blog", href: "/blog" },
     { name: "Contact", href: "/contact" },
-    { name: "Careers", href: "#" },
-  ],
-  Resources: [
-    { name: "Documentation", href: "#" },
-    { name: "API Reference", href: "#" },
-    { name: "Community", href: "#" },
-    { name: "Support", href: "#" },
   ],
   Legal: [
-    { name: "Privacy Policy", href: "#" },
-    { name: "Terms of Service", href: "#" },
-    { name: "Cookie Policy", href: "#" },
+    { name: "Privacy Policy", href: "/privacy-policy" },
+    { name: "Terms of Service", href: "/terms-of-service" },
+    { name: "Cookie Policy", href: "/cookie-policy" },
   ],
 };
 
@@ -30,7 +23,7 @@ const Footer = () => {
   return (
     <footer className="border-t border-border/50 bg-background">
       <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
               <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">

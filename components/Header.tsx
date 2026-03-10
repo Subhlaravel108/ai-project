@@ -23,7 +23,7 @@ const Header = () => {
     const token = document.cookie.split("; ").find((row) => row.startsWith("token="))?.split("=")[1];
     setToken(token || null);
   }, []);
-
+   
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
