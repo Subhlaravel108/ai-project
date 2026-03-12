@@ -4,6 +4,15 @@ import axios from "axios";
 export async function POST(req: Request) {
   try {
     const { text, voiceId, stability, similarity } = await req.json();
+    const headerKey = req.headers.get("xi-api-key");
+    const apiKey = headerKey?.trim() || process.env.ELEVENLABS_API_KEY;
+
+    if (!apiKey) {
+      return NextResponse.json(
+        { error: "ElevenLabs API key not configured" },
+        { status: 500 }
+      );
+    }
 
     const response = await axios.post(
       `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
@@ -17,7 +26,7 @@ export async function POST(req: Request) {
       },
       {
         headers: {
-          "xi-api-key": process.env.ELEVENLABS_API_KEY!,
+          "xi-api-key": apiKey,
           "Content-Type": "application/json",
         },
         responseType: "arraybuffer", // 🔥 VERY IMPORTANT

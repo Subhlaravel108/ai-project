@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { AudioWaveform, Mic, FileAudio, MessageSquare, TrendingUp, Clock, Zap } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 
 
@@ -20,13 +21,23 @@ const stats = [
 ];
 
 const DashboardOverview = () => {
+
+  const [userName, setUserName] = useState("User");
+  
+  useEffect(() => {
+    const user= document.cookie.split("; ").find((row) => row.startsWith("user="));
+    if (user) {
+      const userData = JSON.parse(decodeURIComponent(user.split("=")[1]));
+      setUserName(userData.name || "User");
+    }
+  }, []);
   
   return (
     
     <DashboardLayout>
       <div className="w-full">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <h1 className="text-2xl font-display font-bold mb-1">Welcome back!</h1>
+          <h1 className="text-2xl font-display font-bold mb-1">Welcome back, <span className="font-bold">{userName.toUpperCase() }</span> !</h1>
           <p className="text-sm text-muted-foreground mb-8">Here's an overview of your VoiceAI usage.</p>
         </motion.div>
 

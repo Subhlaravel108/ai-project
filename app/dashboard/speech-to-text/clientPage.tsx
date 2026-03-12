@@ -6,12 +6,15 @@ import { Upload, FileAudio, Copy, Loader2 } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const SpeechToText = () => {
   const { toast } = useToast();
   const [converting, setConverting] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [result, setResult] = useState("");
+  const [language, setLanguage] = useState<string>("auto");
 
  const handleConvert = async () => {
   if (!file) {
@@ -28,6 +31,7 @@ const SpeechToText = () => {
 
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("language_code", language);
 
     const res = await axios.post("/api/speech-to-text", formData);
 
@@ -54,12 +58,37 @@ const SpeechToText = () => {
 
   return (
     <DashboardLayout>
-      <div className="max-w-3xl">
+      <div className="max-w-6xl">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
           <div className="glass-card p-8 text-center">
             <FileAudio className="mx-auto text-muted-foreground mb-4" size={40} />
             <h3 className="font-display font-semibold mb-2">Upload Audio File</h3>
             <p className="text-sm text-muted-foreground mb-6">Drag & drop or click to select an audio file</p>
+
+            <div className="max-w-sm mx-auto mb-5 text-left">
+              <Label className="text-sm">Language</Label>
+              <Select value={language} onValueChange={setLanguage}>
+                <SelectTrigger className="mt-2 cursor-pointer">
+                  <SelectValue placeholder="Auto detect" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="auto">Auto detect</SelectItem>
+                  <SelectItem value="en">English</SelectItem>
+                  <SelectItem value="hi">Hindi</SelectItem>
+                  <SelectItem value="ur">Urdu</SelectItem>
+                  <SelectItem value="pa">Punjabi</SelectItem>
+                  <SelectItem value="bn">Bengali</SelectItem>
+                  <SelectItem value="gu">Gujarati</SelectItem>
+                  <SelectItem value="mr">Marathi</SelectItem>
+                  <SelectItem value="ta">Tamil</SelectItem>
+                  <SelectItem value="te">Telugu</SelectItem>
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-muted-foreground mt-2">
+                Auto detect recommended. Choose a language only if your audio is mixed or detection is wrong.
+              </p>
+            </div>
+
             <div className="border-2 border-dashed border-border rounded-xl p-8 mb-4">
               <input
   type="file"
