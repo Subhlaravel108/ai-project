@@ -35,7 +35,7 @@ const Footer = () => {
               Next generation AI voice platform powering millions of creators worldwide.
             </p>
           </div>
-
+ 
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
               <h4 className="font-display font-semibold text-sm text-foreground mb-4">{category}</h4>
